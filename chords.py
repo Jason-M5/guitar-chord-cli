@@ -2,11 +2,21 @@ CHOROMATIC_SCALE = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', '
 
 MAJOR_SCALE = [0, 2, 4, 5, 7, 9, 11]
 
-def get_chord_notes(chord):
-    #return the notes of the chord
-    pass
+MAJOR_SCALE_NOTES = []
+
+#this returns a major scale for a key.  TODO: make it a function
+
+key = input("Enter the key: ").upper()
+
+if key in CHOROMATIC_SCALE:
+    key_index = CHOROMATIC_SCALE.index(key)
+
+else:
+    print("Invalid key")
+    exit()
 
 for i in MAJOR_SCALE:
-    MAJOR_SCALE_NOTES = []
-    MAJOR_SCALE_NOTES.append(CHOROMATIC_SCALE[i])
-    print(MAJOR_SCALE_NOTES)
+    i += key_index
+    MAJOR_SCALE_NOTES.append(CHOROMATIC_SCALE[i % len(CHOROMATIC_SCALE)])
+
+print(MAJOR_SCALE_NOTES)

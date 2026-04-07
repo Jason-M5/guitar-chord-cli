@@ -1,4 +1,6 @@
 def make_fretboard(tuning=['E', 'A', 'D', 'G', 'B', 'E']):
-    #make a fretboard for the tuning
-    pass
-
+    fret = "---|"
+    for string in tuning:
+        print(f"|{string}| |{fret * 22}")
+    
+make_fretboard()
