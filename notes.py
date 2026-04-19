@@ -35,7 +35,7 @@ def notes_of_scale(scale, key):
 
 
 
-print(notes_of_scale(MINOR_SCALE, key))
+#print(notes_of_scale(MINOR_SCALE, key))
 
 
 
