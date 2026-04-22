@@ -64,4 +64,14 @@ def make_fretboard(tuning=("E", "A", "D", "G", "B", "E"), num_frets=22):
     )
     #pprint(result, sort_dicts=False, width=120)
     return(result)
-make_fretboard() 
+chrds = make_fretboard()
+
+def chords(fretboard):
+    for k, v in fretboard.items():
+        print(k, "this in k, the note of the open string, my value is each fret containing each note.")
+        
+        for j, z in v.items():
+            print(j, " this is j, the fret")
+            print(z, " this is z, the note on the fret")
+
+chords(chrds)
