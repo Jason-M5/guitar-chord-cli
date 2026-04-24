@@ -67,11 +67,18 @@ def make_fretboard(tuning=("E", "A", "D", "G", "B", "E"), num_frets=22):
 chrds = make_fretboard()
 
 def chords(fretboard):
-    for k, v in fretboard.items():
-        print(k, "this in k, the note of the open string, my value is each fret containing each note.")
-        
-        for j, z in v.items():
-            print(j, " this is j, the fret")
-            print(z, " this is z, the note on the fret")
+    chord = []
+    
+    for string, frets in fretboard.items():
+        #print(string, "string, the note of the open string, my value is each fret containing each note.")
+        #print(frets, " frets")
+
+        chord.append(string)
+
+
+        for fret, scale_degree in frets.items():
+            #print(fret, " this is fret, the fret")
+            #print(scale_degree, " this is scale_degree, the note on the fret")
+            print(chord)
 
 chords(chrds)
