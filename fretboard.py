@@ -1,4 +1,5 @@
 
+import enum
 from notes import string_notes, notes_of_scale, MAJOR_SCALE, key
 #from pprint import pprint
 
@@ -66,19 +67,26 @@ def make_fretboard(tuning=("E", "A", "D", "G", "B", "E"), num_frets=22):
     return(result)
 chrds = make_fretboard()
 
-def chords(fretboard):
-    chord = []
-    
-    for string, frets in fretboard.items():
-        #print(string, "string, the note of the open string, my value is each fret containing each note.")
-        #print(frets, " frets")
+def chords(fretboard, tuning=("E", "A", "D", "G", "B", "E")):
+    current_fret = 0
+    fret_span = 0 #between 0 and -3 back from current, we'll walk up and span back. making 4 fret max
+    num_frets = len(fretboard[tuning[0]])
+    chord = {}
+    chords = {}
+    num_chords_found = 0
 
-        chord.append(string)
+
+    while current_fret <= num_frets:
+
+        play = False
+        for string in tuning:
+            
+            if fretboard[string][current_fret] in (1, 3 ,5):
+                play = True
+                
 
 
-        for fret, scale_degree in frets.items():
-            #print(fret, " this is fret, the fret")
-            #print(scale_degree, " this is scale_degree, the note on the fret")
-            print(chord)
+        
+    print(chord)
 
 chords(chrds)
