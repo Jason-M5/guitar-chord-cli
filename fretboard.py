@@ -71,18 +71,20 @@ def chords(fretboard, tuning=("E", "A", "D", "G", "B", "E")):
     current_fret = 0
     fret_span = 0 #between 0 and -3 back from current, we'll walk up and span back. making 4 fret max
     num_frets = len(fretboard[tuning[0]])
-    chord = {}
     chords = {}
     num_chords_found = 0
 
 
     while current_fret <= num_frets:
 
-        play = False
-        for string in tuning:
+        chord = {}
+
+        for string_num, string in enumerate(tuning):
             
-            if fretboard[string][current_fret] in (1, 3 ,5):
-                play = True
+            chord[f"{string}{string_num}"] = {}
+
+            if fretboard[string][current_fret + fret_span: current_fret] in (1, 3 ,5):
+                
                 
 
 
