@@ -73,22 +73,31 @@ def chords(fretboard, tuning=("E", "A", "D", "G", "B", "E")):
     num_frets = len(fretboard[tuning[0]])
     chords = {}
     num_chords_found = 0
+    print(num_frets)
 
 
-    while current_fret <= num_frets:
+    while current_fret < num_frets: #iterate over each fret
 
-        chord = {}
+        chord = {} #temp chord dict with num_chords_found as the key, chord data as value... add to chords
+        
+        for string_num, string in enumerate(tuning): #go through each string
+            current_string = f"{string}{string_num + 1}" #number each string to handle low and high e
+            chord[current_string] = {} #add current string to the temp chord
 
-        for string_num, string in enumerate(tuning):
-            
-            chord[f"{string}{string_num}"] = {}
-
-            if fretboard[string][current_fret + fret_span: current_fret] in (1, 3 ,5):
+            if fretboard[string][current_fret] in (1, 3 ,5):
+                #add fretboard[string][fret] if its 1, 3 or 5. to the temp chord data
+                pass
+        
+        print(current_fret)        
+        print(chord)   
+        
+            #TODO: figure out chord data structure and fix above
+        current_fret += 1
                 
                 
 
 
         
-    print(chord)
+
 
 chords(chrds)
