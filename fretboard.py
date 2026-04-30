@@ -67,9 +67,22 @@ def make_fretboard(tuning=("E", "A", "D", "G", "B", "E"), num_frets=22):
     return(result)
 chrds = make_fretboard()
 
+
+
+def print_chord(chord):
+    pass
+#ill try it this way
+
+
+
+
+
+
+
+
 def chords(fretboard, tuning=("E", "A", "D", "G", "B", "E")):
     current_fret = 0
-    extended_to_fret = 3
+    fret_window_start = 0
     #fret_span = 0 #between 0 and -3 back from current, we'll walk up and span back. making 4 fret max
     num_frets = len(fretboard[tuning[0]])
     #chords = {}
@@ -77,29 +90,22 @@ def chords(fretboard, tuning=("E", "A", "D", "G", "B", "E")):
     print(num_frets)
 
 
-    while current_fret < num_frets: #iterate over each fret
-        '''
-        chord = {} #temp chord dict with num_chords_found as the key, chord data as value... add to chords
+    for fret in range(num_frets):
+
+        if fret_window_start == fret and (fret - 3) >= 0:
+            fret_window_start += 1
         
+        for window in range(fret_window_start, fret):
+
+
+            for string in tuning:    
+                print(fret, window, string)
+
+        #need to figure how to make a chord and ill call print_chord() here somewhere.
 
 
 
-        for string_num, string in enumerate(tuning): #go through each string
-            current_string = f"{string}{string_num + 1}" #number each string to handle low and high e
-            chord[current_string] = {} #add current string to the temp chord
 
-            if fretboard[string][current_fret] in (1, 3 ,5):
-                #add fretboard[string][fret] if its 1, 3 or 5. to the temp chord data
-                pass
-        
-        print(current_fret)        
-        print(chord)   
-        
-            #TODO: figure out chord data structure and fix above
-        current_fret += 1
-        '''
-
-        for i in range(num_frets):
 
             #just print the fstring if 135 in frets on each string and += frets
         
