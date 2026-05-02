@@ -73,7 +73,6 @@ def print_chord(chord):
     pass
 #ill try it this way
 
-#next git push -u origin main
 
 
 
@@ -86,35 +85,34 @@ def chords(fretboard, tuning=("E", "A", "D", "G", "B", "E")):
     current_fret = 0
     fret_window_start = 0
     #fret_span = 0 #between 0 and -3 back from current, we'll walk up and span back. making 4 fret max
-    num_frets = len(fretboard[tuning[0]])
-    #chords = {}
-    #num_chords_found = 0
+    num_frets = list(fretboard[tuning[0]])
+    chords = {}
+    num_chords_found = 0
     print(num_frets)
+    intervals = [1, 3, 5]
+    #frm, to = 0, 0 #frets window
 
 
-    for fret in range(num_frets):
+    for fret in num_frets:
+        chord = {}    
+        for window in num_frets[fret_window_start:fret]:
 
-        chord = {fret: [] for fret in range(num_frets)}
-        
-        for string in tuning: 
+            for number, string in enumerate(tuning):
+
+                if fretboard[string][fret] in intervals:
+                    chord[f"{string}{number}"] = fretboard[string][fret]
             
-            for interval in range(fret_window_start, fret):
             
-                match fretboard[string][interval]:
-                    case 1:
-                        chord[fret].append(1)
-                    case 3:
-                        chord[fret].append(3)
-                    case 5:
-                        chord[fret].append(5)
-                    case _:
-                        chord[fret].append(0)
+            
+            num_chords_found += 1
+            chords[num_chords_found] = chord
+            if fret - fret_window_start > 3:
+                fret_window_start =+ 1
+            
 
-        pprint(chord, width=120)
-                    
 
         #need to figure how to make a chord and ill call print_chord() here somewhere.
-
+    pprint(chords)
 
 
 
