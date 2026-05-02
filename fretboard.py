@@ -1,7 +1,7 @@
 
 import enum
 from notes import string_notes, notes_of_scale, MAJOR_SCALE, key
-#from pprint import pprint
+from pprint import pprint
 
 
 def make_fretboard(tuning=("E", "A", "D", "G", "B", "E"), num_frets=22):
@@ -73,6 +73,8 @@ def print_chord(chord):
     pass
 #ill try it this way
 
+#next git push -u origin main
+
 
 
 
@@ -92,14 +94,24 @@ def chords(fretboard, tuning=("E", "A", "D", "G", "B", "E")):
 
     for fret in range(num_frets):
 
-        if fret_window_start == fret and (fret - 3) >= 0:
-            fret_window_start += 1
+        chord = {fret: [] for fret in range(num_frets)}
         
-        for window in range(fret_window_start, fret):
+        for string in tuning: 
+            
+            for interval in range(fret_window_start, fret):
+            
+                match fretboard[string][interval]:
+                    case 1:
+                        chord[fret].append(1)
+                    case 3:
+                        chord[fret].append(3)
+                    case 5:
+                        chord[fret].append(5)
+                    case _:
+                        chord[fret].append(0)
 
-
-            for string in tuning:    
-                print(fret, window, string)
+        pprint(chord, width=120)
+                    
 
         #need to figure how to make a chord and ill call print_chord() here somewhere.
 
