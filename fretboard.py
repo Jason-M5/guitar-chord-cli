@@ -1,5 +1,3 @@
-
-import enum
 from notes import string_notes, notes_of_scale, MAJOR_SCALE, key
 from pprint import pprint
 
@@ -75,44 +73,61 @@ def print_chord(chord):
 
 
 
+def iter_frets(frets):
+    result = []
+    fret_window_start = 0
+    for fret in frets:
+    
+        while fret_window_start <= fret:
+            wndw = []
+            for window in frets[fret_window_start:fret + 1]:
 
+                wndw.append(window)
+            
+            fret_window_start += 1
+            if wndw:
+                result.append(wndw)
+        
+        if fret < 3:
+            fret_window_start = 0
+        else:
+            fret_window_start = fret - 2
+    return result #returns a list of lists that contain every fret <= 4 combo
 
 
 
 
 
 def chords(fretboard, tuning=("E", "A", "D", "G", "B", "E")):
-    current_fret = 0
-    fret_window_start = 0
-    #fret_span = 0 #between 0 and -3 back from current, we'll walk up and span back. making 4 fret max
+
     num_frets = list(fretboard[tuning[0]])
     chords = {}
     num_chords_found = 0
     print(num_frets)
     intervals = [1, 3, 5]
-    #frm, to = 0, 0 #frets window
 
 
-    for fret in num_frets:
-        chord = {}    
-        for window in num_frets[fret_window_start:fret]:
 
+
+    for window in iter_frets(num_frets):
+
+        chord = {}       
+        for fret in window:
+            
+            
             for number, string in enumerate(tuning):
-
+                pass
+            '''
                 if fretboard[string][fret] in intervals:
-                    chord[f"{string}{number}"] = fretboard[string][fret]
-            
-            
-            
-            num_chords_found += 1
-            chords[num_chords_found] = chord
-            if fret - fret_window_start > 3:
-                fret_window_start =+ 1
-            
+                    chord[f"{string}{number}"] = fretboard[string]               
+                    chord[f"{string}{number}"][window] = fretboard[string][window]
+            ''' 
+
+       
 
 
         #need to figure how to make a chord and ill call print_chord() here somewhere.
-    pprint(chords)
+    #pprint(chords)
 
 
 
