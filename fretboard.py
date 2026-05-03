@@ -67,9 +67,27 @@ chrds = make_fretboard()
 
 
 
-def print_chord(chord):
-    pass
-#ill try it this way
+def print_chord(chor, tuning):
+    
+    '''
+    example
+   x O O O O O
+0  -----------
+1  | | | | O |
+2  | | | | | |
+3  | | O | | |
+4  | O | | | |
+5  | | | | | |
+F  -----------
+    '''
+    for c in chor:
+        print("   ", end="")
+        for t in tuning:
+            print(t, end=" ")
+        print()
+
+        
+
 
 
 
@@ -101,39 +119,47 @@ def iter_frets(frets):
 def chords(fretboard, tuning=("E", "A", "D", "G", "B", "E")):
 
     num_frets = list(fretboard[tuning[0]])
-    chords = {}
+    chords_result = {}
     num_chords_found = 0
-    print(num_frets)
+    #print(num_frets)
     intervals = [1, 3, 5]
 
 
 
 
     for window in iter_frets(num_frets):
-
-        chord = {}       
+        chord = {}
+     
         for fret in window:
-            
+
             
             for number, string in enumerate(tuning):
-                pass
-            '''
+                            
                 if fretboard[string][fret] in intervals:
-                    chord[f"{string}{number}"] = fretboard[string]               
-                    chord[f"{string}{number}"][window] = fretboard[string][window]
-            ''' 
+                    
 
-       
+                   
 
-
-        #need to figure how to make a chord and ill call print_chord() here somewhere.
-    #pprint(chords)
-
-
-
-
-            #just print the fstring if 135 in frets on each string and += frets
+                    chord[f"{string}"] = {fret: fretboard[string][fret]}
         
+        chord_check = set()
 
 
-chords(chrds)
+
+        for i in intervals:
+            for stng in chord:
+                for frt in chord[stng]:
+                    if i == chord[stng][frt]:
+                        chord_check.add(i)
+
+        if intervals == sorted(list(chord_check)):
+            
+            num_chords_found += 1
+            chords_result[num_chords_found] = {}
+            chords_result[num_chords_found] = chord
+
+    pprint(chords_result)
+    return chords_result, tuning
+
+shapes, tune = chords(chrds)
+print_chord(shapes, tune)
