@@ -67,7 +67,7 @@ chrds = make_fretboard()
 
 
 
-def print_chord(chor, tuning):
+def print_chord(chor, tuning, window):
     
     '''
     example
@@ -80,11 +80,7 @@ def print_chord(chor, tuning):
 5  | | | | | |
 F  -----------
     '''
-    for c in chor:
-        print("   ", end="")
-        for t in tuning:
-            print(t, end=" ")
-        print()
+    pass
 
         
 
@@ -157,9 +153,10 @@ def chords(fretboard, tuning=("E", "A", "D", "G", "B", "E")):
             num_chords_found += 1
             chords_result[num_chords_found] = {}
             chords_result[num_chords_found] = chord
+            print_chord(chord, tuning, window)
+
 
     pprint(chords_result)
     return chords_result, tuning
 
 shapes, tune = chords(chrds)
-print_chord(shapes, tune)
