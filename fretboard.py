@@ -67,25 +67,99 @@ chrds = make_fretboard()
 
 
 
-def print_chord(chor, tuning, window):
-    
-    '''
-    example
-   x O O O O O
-0  -----------
-1  | | | | O |
-2  | | | | | |
-3  | | O | | |
-4  | O | | | |
-5  | | | | | |
-F  -----------
-    '''
-    pass
+def print_chord(chor, tuning, window, fretboard):
 
+    n_strings = len(tuning)
+    window_set = set(window)
+
+    base = ["x"] * n_strings
+    free = []
+
+    for i, pitch in enumerate(tuning):
         
+        if pitch in chor and chor[pitch]:
+            base[i] = min(chor[pitch])
+        else:
+            free.append(i)
+
+    rows = [base[:]]
+
+    for i in free:
+        pitch = tuning[i]
+        can_open = fretboard[pitch][0] != 0
+        next_rows = []
+        for row in rows:
+            next_rows.append(row)
+            if can_open:
+                open_row = row[:]
+                open_row[i] = 0
+                next_rows.append(open_row)
+        rows = next_rows
+
+    for simplified in rows:
+        if not all(
+            v == "x" or v == 0 or v in window_set for v in simplified
+        ):
+            continue
+       
+
+        top = []
+        for v in simplified:
+            if v == "x":
+                top.append("x")
+            elif isinstance(v, int) and v > 0:
+                top.append(" ")
+            else:
+                top.append("O")
+
+        def body_for_fret(fret_num):
 
 
+            parts = []
+            for v in simplified:
+                if v == fret_num:
+                    parts.append("0")
+                else:
+                    parts.append("|")
+            return " ".join(parts)
 
+
+        BOX = 5
+
+        finger_frets = [v for v in simplified if isinstance(v, int) and v > 0]
+        if finger_frets:
+            lo, hi = min(finger_frets), max(finger_frets)
+            span = hi - lo + 1
+            if span <= BOX:
+                w0_lo = max(1, hi - BOX + 1)
+                w0_hi = lo
+                w0 = (w0_lo + w0_hi) // 2
+            else:
+                mid = (lo + hi) / 2
+                w0 = int(round(mid - (BOX - 1) / 2))
+                upper = max(1, hi - BOX + 1)
+                w0 = max(1, min(w0, upper))
+        else:
+            w0 = 1
+
+        fret_rows = [w0 + i for i in range(BOX)]
+        label_w = max(
+            1,
+            len(str(w0)),
+            max(len(str(f)) for f in fret_rows),
+            len("F"),
+        )
+
+        body_line = body_for_fret(w0)
+        bar = "=" * len(body_line)
+        print(" " * label_w + "  " + " ".join(top))
+        print(str(0).ljust(label_w) + "  " + bar)
+
+        for fret_row in fret_rows:
+            print(str(fret_row).ljust(label_w) + "  " + body_for_fret(fret_row))
+
+        print(label_w * "  " + bar)
+        print()
 
 def iter_frets(frets):
     result = []
@@ -112,35 +186,23 @@ def iter_frets(frets):
 
 
 
-def chords(fretboard, tuning=("E", "A", "D", "G", "B", "E")):
+def chords(fretboard, tuning=("E", "A", "D", "G", "B", "E"), intervals=[1, 3, 5]):
 
     num_frets = list(fretboard[tuning[0]])
     chords_result = {}
     num_chords_found = 0
     #print(num_frets)
-    intervals = [1, 3, 5]
-
-
-
+    #intervals = [1, 3, 5]
 
     for window in iter_frets(num_frets):
-        chord = {}
-     
-        for fret in window:
-
-            
+        chord = {}     
+        
+        for fret in window:           
             for number, string in enumerate(tuning):
-                            
                 if fretboard[string][fret] in intervals:
-                    
-
-                   
-
                     chord[f"{string}"] = {fret: fretboard[string][fret]}
         
         chord_check = set()
-
-
 
         for i in intervals:
             for stng in chord:
@@ -153,10 +215,10 @@ def chords(fretboard, tuning=("E", "A", "D", "G", "B", "E")):
             num_chords_found += 1
             chords_result[num_chords_found] = {}
             chords_result[num_chords_found] = chord
-            print_chord(chord, tuning, window)
+            print_chord(chord, tuning, window, fretboard)
 
 
-    pprint(chords_result)
+    #pprint(chords_result)
     return chords_result, tuning
 
 shapes, tune = chords(chrds)
