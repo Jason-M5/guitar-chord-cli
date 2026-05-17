@@ -1,14 +1,9 @@
-from sys import exception
-
-
 NOTES = ('A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#')
-key = input("Enter the key: ").upper()
 MAJOR_SCALE = (2, 2, 1, 2, 2, 2)
 MINOR_SCALE = (2, 1, 2, 2, 1, 2)
 
 
-
-def string_notes(string, num_frets):
+def string_notes(string, num_frets=22):
     # returns a list of notes for each fret following the open string.
     result = []
     start_note = NOTES.index(string)
@@ -20,7 +15,7 @@ def string_notes(string, num_frets):
     return result
 
 
-def notes_of_scale(scale, key):
+def notes_of_scale(scale, key="F"):
     start = NOTES.index(key)
     result = [NOTES[start]]
     current_fret = 0
@@ -29,13 +24,6 @@ def notes_of_scale(scale, key):
         result.append(NOTES[(start + current_fret) % len(NOTES)])
     return result
 
-
-    
-        
-
-
-
-#print(notes_of_scale(MINOR_SCALE, key))
 
 
 

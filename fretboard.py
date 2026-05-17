@@ -1,8 +1,7 @@
-from notes import string_notes, notes_of_scale, MAJOR_SCALE, key
-from pprint import pprint
+from notes import string_notes, notes_of_scale, MAJOR_SCALE
 
 
-def make_fretboard(tuning=("E", "A", "D", "G", "B", "E"), num_frets=22):
+def make_fretboard(key="F", tuning=("E", "A", "D", "G", "B", "E"), num_frets=22):
 
     '''
     EXAMPLE:
@@ -15,8 +14,9 @@ def make_fretboard(tuning=("E", "A", "D", "G", "B", "E"), num_frets=22):
     E |O|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 
     '''
+    
     result = {i: {j: None for j in range(num_frets)} for i in tuning}
-
+    
     
     print()
     for string in tuning[-1::-1]:
@@ -59,11 +59,12 @@ def make_fretboard(tuning=("E", "A", "D", "G", "B", "E"), num_frets=22):
         (" " * 8), 15, 
         (" " * 4), 17, 
         (" " * 4), 19, 
-        (" " * 4), 21
+        (" " * 4), 21,
+        "\n\n"
     )
     #pprint(result, sort_dicts=False, width=120)
     return(result)
-chrds = make_fretboard()
+#chrds = make_fretboard()
 
 
 
@@ -191,8 +192,6 @@ def chords(fretboard, tuning=("E", "A", "D", "G", "B", "E"), intervals=[1, 3, 5]
     num_frets = list(fretboard[tuning[0]])
     chords_result = {}
     num_chords_found = 0
-    #print(num_frets)
-    #intervals = [1, 3, 5]
 
     for window in iter_frets(num_frets):
         chord = {}     
@@ -217,8 +216,5 @@ def chords(fretboard, tuning=("E", "A", "D", "G", "B", "E"), intervals=[1, 3, 5]
             chords_result[num_chords_found] = chord
             print_chord(chord, tuning, window, fretboard)
 
-
-    #pprint(chords_result)
     return chords_result, tuning
 
-shapes, tune = chords(chrds)
