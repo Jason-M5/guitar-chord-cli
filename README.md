@@ -2,4 +2,4 @@
 
 ## Run main.py
 
-    Based on the answers you give the promppts it will dislay a lot of asci chords with differect string and tuning variables.s
+    Based on the answers you give the prompts it will dislay a lot of ascii chords with different string and tuning variations
