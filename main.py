@@ -1,26 +1,23 @@
 import fretboard
-from notes import NOTES
+from details import get_details
 
-def get_key():
-    key = input("Enter the key: ").upper()
-    if key not in NOTES:
-        print("Invalid key")
-        return get_key()
-    print("\n")
-    if key:
-        print(f"Key of {key}")
-    else:
-        print("Key of F")
-    return key
 
-key = get_key()
 def main():
-    
-    if key:
-        fb = fretboard.make_fretboard(key)
-    else:
-        fb = fretboard.make_fretboard()
-    fretboard.chords(fb)
+    key, tuning, num_frets, scale = get_details()
+
+    kwargs = {}
+    if key is not None:
+        kwargs["key"] = key
+    if tuning is not None:
+        kwargs["tuning"] = list(tuning)
+    if num_frets is not None:
+        kwargs["num_frets"] = num_frets
+    if scale is not None:
+        kwargs["scale"] = scale
+
+    fb = fretboard.make_fretboard(**kwargs)
+    tuning_for_chords = tuning if tuning is not None else ("E", "A", "D", "G", "B", "E")
+    fretboard.chords(fb, tuning=tuning_for_chords)
 
 
 if __name__ == "__main__":

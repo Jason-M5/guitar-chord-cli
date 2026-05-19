@@ -1,7 +1,7 @@
-from notes import string_notes, notes_of_scale, MAJOR_SCALE
+from notes import string_notes, notes_of_scale, MAJOR_SCALE, MINOR_SCALE
 
 
-def make_fretboard(key="F", tuning=("E", "A", "D", "G", "B", "E"), num_frets=22):
+def make_fretboard(key="F", tuning=("E", "A", "D", "G", "B", "E"), num_frets=22, scale=MAJOR_SCALE):
 
     '''
     EXAMPLE:
@@ -22,10 +22,13 @@ def make_fretboard(key="F", tuning=("E", "A", "D", "G", "B", "E"), num_frets=22)
     for string in tuning[-1::-1]:
         
         fret_notes = string_notes(string, num_frets)
-        scale_notes = notes_of_scale(MAJOR_SCALE, key)
+        scale_notes = notes_of_scale(scale, key)
         current_fret = 0
         if string in scale_notes:
-            print(string, end=f" |{scale_notes.index(string) + 1}||")
+            if len(string) == 1:
+                print(string, end=f" |{scale_notes.index(string) + 1}||")
+            else:
+                print(string, end=f"|{scale_notes.index(string) + 1}||")
             result[string][current_fret] = scale_notes.index(string) + 1
             
         else:
